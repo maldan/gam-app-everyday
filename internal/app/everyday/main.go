@@ -23,7 +23,7 @@ func Start(frontFs embed.FS) {
 	var dataDir = flag.String("dataDir", "db", "Data Directory")
 	_ = flag.String("appId", "id", "App id")
 	flag.Parse()
-	
+
 	// Set
 	core.DataDir = *dataDir
 
@@ -32,12 +32,13 @@ func Start(frontFs embed.FS) {
 		Host: fmt.Sprintf("%s:%d", *host, *port),
 		Router: map[string]rapi_core.Handler{
 			"/": rapi_vfs.VFSHandler{
-				Root: "frontend/build",
+				Root: "frontend/dist",
 				Fs:   frontFs,
 			},
 			"/api": rapi_rest.ApiHandler{
 				Controller: map[string]interface{}{
-					"main":    api.MainApi{},
+					"main":   api.MainApi{},
+					"target": api.TargetApi{},
 				},
 			},
 		},

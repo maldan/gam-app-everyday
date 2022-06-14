@@ -6,7 +6,7 @@ import (
 	helloworld "github.com/maldan/gam-app-everyday/internal/app/everyday"
 )
 
-//go:embed frontend/build/*
+//go:embed frontend/dist/*
 var frontFs embed.FS
 
 func main() {

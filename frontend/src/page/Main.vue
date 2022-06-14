@@ -1,54 +1,51 @@
 <template>
   <div :class="$style.main">
-    <Block>
-      <div v-if="!isChange" :class="$style.time">
-        {{ TimeHelper.secondsToHMS(timer) }}
-      </div>
-      <Input v-if="isChange" v-model="time" />
-
-      <Row size="2" style="margin-top: 10px">
-        <Button v-if="!isChange" @click="isChange = !isChange" text="Change" />
-        <Button v-if="isChange" @click="change" text="Ok" />
-        <Button @click="stop" text="Stop">
-          <template #icon-right><IconClose style="margin-left: 5px" /></template>
-        </Button>
-      </Row>
+    <Block style="padding: 0; width: 200px">
+      <Section title="Today">
+        <Row
+          v-for="x in targetStore.list"
+          :size="isEditMode ? '32px 1fr 30px' : '1fr 30px'"
+          style="padding: 5px 0"
+          :key="x.id"
+        >
+          <Button v-if="isEditMode" color="gray" style="padding: 1px; margin-right: 5px"
+            ><IconPencil size="24" color="#999999"
+          /></Button>
+          <div>{{ x.name }}</div>
+          <Checkbox v-model="x.status" />
+        </Row>
+      </Section>
+      <Section title="Edit">
+        <Row size="1fr 1fr">
+          <Button @click="add" color="gray">Add</Button>
+          <Button @click="edit" color="gray">Edit</Button>
+        </Row>
+      </Section>
     </Block>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Button, Checkbox, Toggle, Input, Block, Row } from '../gam-lib-ui/vue/component/ui';
-import { IconClose } from '../gam-lib-ui/vue/component/icon';
-import { ref } from 'vue';
-import { TimeHelper } from '@/gam-lib-ui/util/TimeHelper';
+import { Button, Checkbox, Block, Row, Section } from '../gam-lib-ui/vue/component/ui';
+import { IconPencil } from '../gam-lib-ui/vue/component/icon';
+import { onMounted, ref } from 'vue';
 import { API_URL } from '@/const';
+import { useTargetStore } from '@/store/target';
 
-const time = ref('00:00:00');
-const isChange = ref(false);
-const isStop = ref(false);
-const timer = ref(0);
+const isEditMode = ref(false);
+const targetStore = useTargetStore();
 
-const ring = new Audio(`${API_URL}/main/ring`);
+onMounted(async () => {
+  await targetStore.getList();
+});
 
-setInterval(() => {
-  if (timer.value <= 0) return;
-
-  timer.value -= 1;
-  if (timer.value <= 0) {
-    ring.play();
-  }
-}, 1000);
-
-function change() {
-  isChange.value = false;
-  isStop.value = false;
-  timer.value = TimeHelper.HMStoSeconds(time.value);
+async function add() {
+  await targetStore.add('z');
+  await targetStore.getList();
 }
 
-function stop() {
-  isStop.value = true;
-  ring.pause();
+function edit() {
+  isEditMode.value = !isEditMode.value;
 }
 </script>
 

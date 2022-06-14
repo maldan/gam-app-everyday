@@ -4,5 +4,6 @@ import Toggle from "./toggle.vue";
 import Input from "./input.vue";
 import Block from "./block.vue";
 import Row from "./row.vue";
+import Section from "./section.vue";
 
-export { Button, Checkbox, Toggle, Input, Block, Row };
+export { Button, Checkbox, Toggle, Input, Block, Row, Section };

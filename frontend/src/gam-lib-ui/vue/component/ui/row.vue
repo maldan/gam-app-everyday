@@ -15,7 +15,8 @@ defineProps<{
 
 .row {
   display: grid;
-  grid-template-columns: repeat(v-bind(size), 1fr);
+  grid-template-columns: v-bind(size);
   gap: $space-1;
+  align-items: center;
 }
 </style>

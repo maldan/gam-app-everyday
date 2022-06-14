@@ -15,5 +15,6 @@
   border-radius: $radius-3;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 </style>
