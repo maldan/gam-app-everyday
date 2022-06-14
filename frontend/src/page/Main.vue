@@ -31,21 +31,28 @@ import { IconPencil } from '../gam-lib-ui/vue/component/icon';
 import { onMounted, ref } from 'vue';
 import { API_URL } from '@/const';
 import { useTargetStore } from '@/store/target';
+import { useModalStore } from '@/gam-lib-ui/vue/store/modal';
 
 const isEditMode = ref(false);
 const targetStore = useTargetStore();
+const modalStore = useModalStore();
 
 onMounted(async () => {
   await targetStore.getList();
 });
 
 async function add() {
-  await targetStore.add('z');
-  await targetStore.getList();
+  // await targetStore.add('z');
+  // await targetStore.getList();
+  modalStore.show('target/add');
 }
 
 function edit() {
   isEditMode.value = !isEditMode.value;
+}
+
+function editTarget() {
+  modalStore.show('target/add');
 }
 </script>
 

@@ -23,7 +23,7 @@
 withDefaults(
   defineProps<{
     color?: string;
-    size?: number;
+    size?: number | string;
   }>(),
   {
     color: '#fefefe',
