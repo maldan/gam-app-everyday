@@ -19,9 +19,5 @@ const modalStore = useModalStore();
 @import '@/gam-lib-ui/vue/vars';
 
 .container {
-  display: grid;
-  grid-template-columns: v-bind(size);
-  gap: $space-1;
-  align-items: center;
 }
 </style>
