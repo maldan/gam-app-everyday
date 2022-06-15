@@ -24,3 +24,7 @@ func (r TargetApi) PostIndex(args core.Target) {
 	args.Id = cmhp_crypto.UID(10)
 	cmhp_file.Write(core.DataDir+"/target/"+args.Id+".json", &args)
 }
+
+func (r TargetApi) PatchIndex(args core.Target) {
+	cmhp_file.Write(core.DataDir+"/target/"+args.Id+".json", &args)
+}

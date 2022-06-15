@@ -39,6 +39,7 @@ func Start(frontFs embed.FS) {
 				Controller: map[string]interface{}{
 					"main":   api.MainApi{},
 					"target": api.TargetApi{},
+					"stat":   api.StatApi{},
 				},
 			},
 		},
